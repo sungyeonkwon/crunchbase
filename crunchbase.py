@@ -45,10 +45,7 @@ def get_detail_collection(id_collection, endpoint, properties):
         res = requests.get(f'{base}/{endpoint}/{id}?user_key={user_key}')
         if res:
             json_data = res.json()
-            print('json_data', json_data)
-            print(json_data['data']['properties'])
             for prop in properties:
-                print(json_data['data']['properties'][prop])
                 custom_collection[id][prop] = json_data['data']['properties'][prop]
         else:
             print('Response Failed in get_detail_collection: ', res)
