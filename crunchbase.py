@@ -2,8 +2,11 @@
 # https://data.crunchbase.com/docs/using-the-api
 # https://data.crunchbase.com/reference
 
-import requests
+import csv
+import itertools
 import json
+import requests
+import sys
 
 base = 'https://api.crunchbase.com/v3.1'
 user_key = '7c49ff3ff79a2be9685cb2ecbfb65764'
@@ -35,7 +38,6 @@ def get_detail_collection(id_collection, endpoint, properties):
         properties (list of strings): list of properties
     Returns: collection (JSON) || None
     """
-    print('id_collection', id_collection)
 
     custom_collection = {}
     for id in id_collection:
@@ -66,6 +68,15 @@ properties = [
 ]
 custom_collection = get_detail_collection(uuids, 'funding-rounds', properties)
 
-# Optional: Save json data as file.
-with open('crunchbase.json', 'w') as json_file:
-    json.dump(custom_collection, json_file)
+# Optional: Save data as csv file.
+with open('crunchbase.csv', 'w') as csvfile:
+    writer = csv.DictWriter(csvfile, ['id'] + properties)
+    writer.writeheader()
+    for key, val in sorted(custom_collection.items()):
+        row = {'id': key}
+        row.update(val)
+        writer.writerow(row)
+
+# Optional: Save data as json file.
+# with open('crunchbase.json', 'w') as json_file:
+#     json.dump(custom_collection, json_file)
