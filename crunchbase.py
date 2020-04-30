@@ -9,7 +9,7 @@ import requests
 import sys
 
 base = 'https://api.crunchbase.com/v3.1'
-user_key = '7c49ff3ff79a2be9685cb2ecbfb65764'
+user_key = ''
 
 def get_collection(endpoint):
     """
